@@ -22,6 +22,7 @@ from app.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='index.html'), name='index'),
+    path('nav.html', TemplateView.as_view(template_name='nav.html')),
     path('consulta/', consulta, name='consultas'),
     path('reserva/', reserva, name='reservas'),
     path('autores/', autores, name='autores'),
