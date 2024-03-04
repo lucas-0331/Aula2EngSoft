@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %} {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    {% block favicon %}
+        <link rel="icon" type="image/x-icon" href="{% static 'media/icon/favicon.ico' %}">
+    {% endblock %}
+    {% block head %} {% endblock %}
+</head>
+<body class="bg-slate-100 select-none overflow-x-hidden box-border">
+    <header class="h-2/12">
+        {% block header %} {% endblock %}
+    </header>
+    <main class="h-9/12">
+        {% block main %} {% endblock %}
+    </main>
+    <footer class="h-1/12">
+        {% block footer %} {% endblock %}
+    </footer>
+</body>
+</html>
