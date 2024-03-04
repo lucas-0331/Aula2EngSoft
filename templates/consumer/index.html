@@ -1,0 +1,34 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Page</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <button class="order-button" data-item="item1">Add Item 1</button>
+    <button class="order-button" data-item="item2">Add Item 2</button>
+    <button id="make-order">Make Order</button>
+
+    <script>
+        var socket = new WebSocket('ws://localhost:8000/ws/order/');
+        var cart = [];
+
+        $('.order-button').click(function() {
+            var item = $(this).data('item');
+            cart.push(item);
+        });
+
+        $('#make-order').click(function() {
+            socket.send(JSON.stringify({
+                message: 'Order made: ' + cart.join(', ')
+            }));
+            cart = [];
+        });
+
+        socket.onmessage = function(e) {
+            alert(e.data);
+        };
+    </script>
+</body>
+</html>

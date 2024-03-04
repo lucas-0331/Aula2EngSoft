@@ -1,0 +1,43 @@
+<!-- kitchen/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitchen Page</title>
+</head>
+<body>
+    <h1>Kitchen Page</h1>
+    <ul id="messageList"></ul>
+
+    <script>
+        const socketKitchen = new WebSocket('ws://127.0.0.1:8000/ws/kitchen/');
+        
+        socketKitchen.onopen = (event) => {
+            console.log('WebSocket connection opened:', event);
+        };
+
+        socketKitchen.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            console.log('WebSocket message received:', message);
+            displayMessage(message.message);
+        };
+
+        socketKitchen.onerror = (error) => {
+            console.log('WebSocket error:', error);
+        };
+
+        socketKitchen.onclose = (event) => {
+            console.log('WebSocket connection closed:', event);
+        };
+
+        function displayMessage(message) {
+            const messageList = document.getElementById('messageList');
+            const listItem = document.createElement('li');
+            listItem.textContent = message;
+            messageList.appendChild(listItem);
+        }
+    </script>
+</body>
+</html>
