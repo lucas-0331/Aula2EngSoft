@@ -42,9 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # App
-    'core',
+    'src.core',
     'src.establishment',
     'src.consumer',
+    'src.product',
     
     # Pip
     'channels',
@@ -59,6 +60,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    'src.core.middleware.AuthMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -153,6 +156,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 JAZZMIN_SETTINGS = {
     'site_header': "Izzy Table",
     'site_brand': "Izzy Table",
-    'site_logo': "icon/logo.png",
+    'site_logo': "icon/favicon.ico",
     'copyright': "Browniest",
 }
+
+AUTH_USER_MODEL = 'consumer.User'

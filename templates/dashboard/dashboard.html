@@ -5,7 +5,7 @@
 {% block header %}
     <div class="top-0 w-screen bg-browniest flex p-2 items-center text-white justify-between h-20">
         <div id="logo" class="pl-4">
-            <a href="{% url 'dashboard' %}" class="font-bold text-md sm:text-lg md:text-xl">
+            <a href="{% url 'establishment:dashboard' %}" class="font-bold text-md sm:text-lg md:text-xl">
                 Izzy Table
             </a>
         </div>
@@ -44,7 +44,7 @@
             {% endif %}
             <div class="fixed bottom-10 w-full p-2">
                 <div id="input_search my-2">
-                    <form id="form" method="post" action="{% url 'search_view' %}" class="flex flex-col items-center">
+                    <form id="form" method="post" action="{% url 'establishment:search_view' %}" class="flex flex-col items-center">
                         {% csrf_token %}
                         <input type="text" name="establishment" autofocus class="focus:border-browniest-dark text-browniest h-10 shadow-md w-10/12 sm:w-4/5 md:h-12 lg:h-14 text-xl lg:text-2xl rounded-full p-4">
                     </form>

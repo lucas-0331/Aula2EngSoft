@@ -7,7 +7,7 @@
 {% block main %}
     <section class="text-browniest m-0 p-4 h-full relative overscroll-none">
         <div class="h-screen">
-            <a href="{% url 'index' %}">
+            <a href="{% url 'src.core:index' %}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left h-8 sm:h-10 md:h-14 lg:h-16" viewBox="0 0 24 24" stroke-width="2.5" stroke="#5c2217" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <path d="M5 12l14 0" />
@@ -21,7 +21,7 @@
                 </h1>
             </div>
             <div class="h-3/4">
-                <form method="post" action="{% url 'register_view' %}" class="flex flex-col items-center">
+                <form method="post" action="{% url 'src.core:register_view' %}" class="flex flex-col items-center">
                     {% csrf_token %}
                     {% for field in form %}
                         <div class="flex flex-col mb-2 w-1/2 md:w-1/3">

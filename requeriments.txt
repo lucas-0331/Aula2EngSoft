@@ -11,6 +11,9 @@ cryptography==42.0.5
 daphne==4.1.0
 Django==5.0.2
 django-jazzmin==2.6.0
+elastic-transport==8.12.0
+elasticsearch==8.12.0
+elasticsearch-dsl==8.12.0
 hyperlink==21.0.0
 idna==3.6
 incremental==22.10.0
