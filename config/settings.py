@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+from elasticsearch_dsl.connections import connections
+
+connections.create_connection(alias='default', hosts=['http://localhost:9200'])
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +31,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # App
+    'config',
     'src.core',
     'src.establishment',
     'src.consumer',
@@ -50,6 +53,7 @@ INSTALLED_APPS = [
     # Pip
     'channels',
     'channels_redis',
+    'elasticsearch_dsl',
 ]
 
 MIDDLEWARE = [

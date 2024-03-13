@@ -18,15 +18,22 @@ class OrderConsumer(AsyncWebsocketConsumer):
         )
 
     async def receive(self, text_data):
-        order_data = json.loads(text_data)
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                "type": "kitchen.message",
-                "message": order_data['message'],
-            }
-        )
-        await self.send(text_data=json.dumps({'message': 'Pedido recebido com sucesso!'}))
+        try:
+            order_data = json.loads(text_data)
+            message = order_data.get('message', '')
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    "type": "kitchen.message",
+                    "message": message,
+                }
+            )
+            await self.send(text_data=json.dumps({'message': 'Pedido recebido com sucesso!'}))
+        except json.JSONDecodeError:
+            await self.send(text_data=json.dumps({'error': 'Erro ao decodificar JSON'}))
+        except KeyError:
+            await self.send(text_data=json.dumps({'error': 'Chave "message" ausente na mensagem'}))
+
 
     async def kitchen_message(self, event):
         message = event['message']

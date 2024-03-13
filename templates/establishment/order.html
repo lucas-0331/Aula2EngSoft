@@ -1,0 +1,18 @@
+{% extends "../base.html" %}
+{% block title %}Detalhes do Pedido{% endblock %}
+
+{% block main %}
+    <h1>Detalhes do Pedido</h1>
+    <p>ID do Pedido: {{ sell.sell_id }}</p>
+    <p>Valor Total: R$ {{ sell.sell_value_total }}</p>
+    <p>Data do Pedido: {{ sell.sell_date }}</p>
+
+    <h2>Itens do Pedido</h2>
+    <ul>
+        {% for item in items %}
+            <li>
+                {{ item.item_product.product_name }} - Quantidade: {{ item.item_quantity }} - Valor Unitário: R$ {{ item.item_value }} - Valor Total: R$ {{ item.item_value_total }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

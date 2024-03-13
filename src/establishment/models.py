@@ -48,4 +48,4 @@ class Establishment(models.Model):
         verbose_name_plural = "Estabelecimentos"
 
     def __str__(self):
-        return f"{self.establishment_cnpj}"
+        return f"{self.establishment_name}"

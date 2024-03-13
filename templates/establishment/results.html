@@ -1,0 +1,15 @@
+{% extends "../base.html" %}
+
+{% block title %}
+    Resultados
+{% endblock %}
+
+{% block main %}
+    <div class="flex flex-col justify-center items-center pt-10 gap-2">
+        {% for result in results %}
+            <a href="{% url 'establishment_view' name=result.establishment_name id=result.establishment_id %}" class="p-2 bg-browniest w-1/2 md:w-2/5 lg:w-2/6 h-18 sm:h-20 md:h-22 flex justify-center items-center rounded hover:bg-browniest-light border-b-2 border-browniest-dark text-center font-bold text-xl md:text-2xl text-white">
+                {{ result.establishment_name }}
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

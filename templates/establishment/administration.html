@@ -1,0 +1,196 @@
+{% extends '../base.html' %}
+
+{% block title %} {{ name }} {% endblock %}
+
+{% block header %}
+    <div class="top-0 w-screen bg-browniest flex p-2 items-center text-white justify-between h-20">
+        <div id="logo" class="pl-4">
+            <span class="font-bold text-md sm:text-lg md:text-xl">
+                {{ name }}
+            </span>
+        </div>
+        {% if establishment.establishment_description %}
+            <div id="slogan" class="hidden sm:block">
+                {{ establishment.establishment_description }}
+            </div>
+        {% endif %}
+        <div id="user" class="pr-4">
+            <span class="font-bold">
+                {{ user.username|capfirst }}
+            </span>
+        </div>
+    </div>
+{% endblock %}
+
+{% block main %}
+    <div class="flex justify-end p-4 gap-4">
+        <div>
+            <a href="{% url 'establishment:dashboard' %}" class="rounded w-32 h-8 bg-browniest hover:bg-browniest-light text-white font-bold text-center flex justify-center items-center">
+                Dashboard
+            </a>
+        </div>
+        <!-- <div>
+            <a href="{% url 'report_view' id=establishment.establishment_id %}" class="rounded w-32 h-8 bg-browniest hover:bg-browniest-light text-white font-bold text-center flex justify-center items-center">
+                Relatório
+            </a>
+        </div>
+        <div>
+            <a href="{% url 'new_product_view' id=establishment.establishment_id %}" class="rounded w-32 h-8 bg-browniest hover:bg-browniest-light text-white font-bold text-center flex justify-center items-center">
+                Novo Produto
+            </a>
+        </div> -->
+    </div>
+    <div class="p-4">
+        {%for category in categories %}
+            <div class="mt-4">
+                <span class="font-bold text-2xl">
+                    {{ category }}
+                </span>
+            </div>
+            <div class="flex just-center">
+                <table class="table-auto border-2 border-collapse w-full rounded">
+                    <thead class="border-2 p-2">
+                        <tr>
+                            <th class="w-4/12 border-2 border-slate-400 py-2">Nome</th>
+                            <th class="w-1/12 border-2 border-slate-400 py-2">Valor</th>
+                            <th class="w-1/12 border-2 border-slate-400 hidden md:table-cell py-2">Custo</th>
+                            <th class="w-1/12 border-2 border-slate-400 py-2">Quantidade</th>
+                            <th class="w-1/12 border-2 border-slate-400 hidden md:table-cell py-2">Categoria</th>
+                            <th class="w-3/12 border-2 border-slate-400 hidden md:table-cell py-2">Descrição</th>
+                            <th class="w-1/12 border-2 border-slate-400 py-2">Função</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                            {% if category == product.product_category %}
+                                <span class="hidden">
+                                    {% cycle '' 'bg-slate-200' as row_color %}
+                                </span>
+                                <tr class="{{ row_color }} border-2">
+                                    <td class="border-2 border-slate-400 p-2">{{ product.product_name }}</td>
+                                    {% if product.product_value < product.product_cost %}
+                                        <td class="border-2 border-slate-400 p-2 text-red-500">{{ product.product_value }}</td>
+                                    {% else %}    
+                                        <td class="border-2 border-slate-400 p-2">{{ product.product_value }}</td>
+                                    {% endif %}
+                                    <td class="border-2 border-slate-400 hidden md:table-cell p-2">{{ product.product_cost }}</td>
+                                    <td class="border-2 border-slate-400 p-2">{{ product.product_quantity }}</td>
+                                    <td class="border-2 border-slate-400 hidden md:table-cell p-2">{{ product.product_category }}</td>
+                                    <td class="border-2 border-slate-400 hidden md:table-cell p-2">{{ product.product_description }}</td>
+                                    <td class="border-2 border-slate-400 p-2">
+                                        <div class="flex justify-around">
+                                            <a href="{% url 'edit_product_view' id=establishment.establishment_id product=product.product_id %}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit w-8" viewBox="0 0 24 24" stroke-width="1.5" stroke="#0390fc" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                    <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                                    <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                                    <path d="M16 5l3 3" />
+                                                </svg>
+                                            </a>
+                                            <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" data-param-id="{{establishment.establishment_id}}" data-param-product="{{product.product_id}}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash w-8" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fc0303" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                    <path d="M4 7l16 0" />
+                                                    <path d="M10 11l0 6" />
+                                                    <path d="M14 11l0 6" />
+                                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %} 
+    </div>
+
+    <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-1/2 right-1/2 left-1/2 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-gray-800 bg-opacity-60 dark:bg-transparent">
+        <div class="relative p-4 w-full max-w-md max-h-full">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                <div class="p-4 md:p-5 text-center">
+                    <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                    </svg>
+                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Você deseja realmente apagar este produto?</h3>
+                    <button data-modal-hide="popup-modal" data-modal-confirm type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                        Sim
+                    </button>
+                    <button data-modal-hide="popup-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Não, cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const modalTriggers = document.querySelectorAll('[data-modal-toggle]');
+            const modalCloses = document.querySelectorAll('[data-modal-hide]');
+            const modal = document.getElementById('popup-modal');
+            const confirmButton = document.querySelector('[data-modal-confirm]');
+    
+            modalTriggers.forEach(trigger => {
+                trigger.addEventListener('click', (event) => {
+                    const param1 = event.currentTarget.getAttribute('data-param-id');
+                    const param2 = event.currentTarget.getAttribute('data-param-product');
+    
+                    window.param1 = param1;
+                    window.param2 = param2;
+    
+                    modal.classList.toggle('hidden');
+                });
+            });
+    
+            modalCloses.forEach(close => {
+                close.addEventListener('click', () => {
+                    modal.classList.add('hidden');
+                });
+            });
+    
+            confirmButton.addEventListener('click', () => {
+                const id = window.param1;
+                const product = window.param2;
+                const url = `/${id}/destroy_product/${product}/`;
+    
+                fetch(url, {
+                    method: 'POST',  
+                    headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCookie('csrftoken'),
+                        },
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Erro de rede: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Erro ao fazer a solicitação:', error);
+                });
+    
+                modal.classList.add('hidden');
+            });
+        });
+    </script>
+    
+    
+{% endblock %}
