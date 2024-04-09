@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marca</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <header class="bg-gray-600 text-white p-8 font-bold flex justify-between">
+        <h1>Meu Site</h1>
+        <ul class="flex gap-6">
+            <li>
+                <a href="marca.html">
+                    Marca
+                </a>
+            </li>
+            <li>
+                <a href="modelo.html" class=" hover:text-stone-400 target:text-yellow-600">
+                    Modelo
+                </a>
+            </li>
+            <li>
+                <a href="veiculos.html">
+                    Veículos
+                </a>
+            </li>
+        </ul>
+    </header>
+    <div class="p-2 w-full h-8 text-sm text-gray-600">
+        <p>Home/Marca</p>
+    </div>
+    <button class="absolute right-2 m-2 px-4 py-2 rounded bg-slate-300">
+        <a href="index.html">Voltar</a>
+    </button>
+    <div class="m-2">
+        <div>
+            <form action="." method="post" class="flex flex-col w-1/2">
+                <label for="marca" class="mt-2">
+                    Marca
+                </label>
+                <input type="text" id="marca" name="marca" class="border-[1px] rounded h-10 px-2">
+                <button type="submit" class="bg-green-600 text-white rounded my-2 h-10 font-bold">
+                    Enviar
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
